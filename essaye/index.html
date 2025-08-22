@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulaire Pix</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .competence { margin-bottom: 15px; }
+    label { font-weight: bold; display: block; margin-bottom: 5px; }
+    select { padding: 5px; }
+    button { margin-top: 20px; padding: 10px 20px; cursor: pointer; }
+    pre { background: #f4f4f4; padding: 10px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Formulaire de compétences Pix</h1>
+  <form id="pixForm">
+    <div id="competences"></div>
+    <button type="submit">Soumettre</button>
+  </form>
+
+  <h2>Résultat JSON :</h2>
+  <pre id="result"></pre>
+
+  <script>
+    const competences = [
+      "Information et données",
+      "Communication et collaboration",
+      "Création de contenu",
+      "Protection et sécurité",
+      "Environnement numérique",
+      "Résolution de problèmes techniques",
+      "Développement de la programmation",
+      "Culture numérique",
+      "Recherche d’information",
+      "Partage et publication",
+      "Collaboration en ligne",
+      "Écriture et édition numérique",
+      "Sécurité des données",
+      "Maintenance et mise à jour",
+      "Connaissance des droits numériques",
+      "Apprentissage en ligne"
+    ];
+
+    const competencesContainer = document.getElementById("competences");
+
+    // Génération des champs
+    competences.forEach((comp, index) => {
+      const div = document.createElement("div");
+      div.className = "competence";
+      div.innerHTML = `
+        <label for="comp${index}">${comp}</label>
+        <select id="comp${index}" name="comp${index}">
+          <option value="0">Niveau 0</option>
+          <option value="1">Niveau 1</option>
+          <option value="2">Niveau 2</option>
+          <option value="3">Niveau 3</option>
+          <option value="4">Niveau 4</option>
+          <option value="5">Niveau 5</option>
+        </select>
+      `;
+      competencesContainer.appendChild(div);
+    });
+
+    // Gestion du submit
+    document.getElementById("pixForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const results = {};
+      competences.forEach((comp, index) => {
+        const val = parseInt(document.getElementById(`comp${index}`).value);
+        results[comp] = val;
+      });
+      document.getElementById("result").textContent = JSON.stringify(results, null, 2);
+    });
+  </script>
+</body>
+</html>
